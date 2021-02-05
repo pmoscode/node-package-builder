@@ -1,5 +1,5 @@
 {
-  "name": "node-package-builder",
+  "name": "@pmoscode/node-package-builder",
   "version": "0.1.0",
   "description": "A node package helper which assists you in organizing your package.json for multiple environment",
   "bin": "./dist/src/bin/npb.js",
