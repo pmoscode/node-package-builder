@@ -12,7 +12,7 @@ export class ParseArgs {
         });
 
         this.parser.add_argument('environment', {
-            help: 'The name of the environment to apply to test.json',
+            help: 'The name of the environment to apply to package.json',
             default: '__base__',
             nargs: '?',
         });
@@ -21,15 +21,15 @@ export class ParseArgs {
             default: 'envs',
         });
         this.parser.add_argument('-d', '--dry-run', {
-            help: 'Shows only the result. No modification of test.json done (default == false)',
+            help: 'Shows only the result. No modification of package.json done (default == false)',
             action: 'store_true',
         });
         this.parser.add_argument('-b', '--backup-name', {
-            help: 'Name of the test.json backup file. Restored when calling without any environment.',
-            default: '.test.json',
+            help: 'Name of the package.json backup file. Restored when calling without any environment.',
+            default: '.package.json',
         });
         this.parser.add_argument('-i', '--include-environment', {
-            help: 'Inserts a field into the modified test.json which contains the used environment',
+            help: 'Inserts a field into the modified package.json which contains the used environment',
             action: 'store_true',
         });
         this.parser.add_argument('-o', '--one-file-environment', {
