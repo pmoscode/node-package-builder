@@ -50,6 +50,8 @@ create_npmrc:
 # will fail and the existing package will not be updated.
 publish_package:
   stage: deploy
+  dependencies:
+    - create_npmrc
   script:
     - |
       {
