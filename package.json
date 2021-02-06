@@ -9,7 +9,7 @@
   "author": "Peter Motzko <info@pmoscode.de>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc && chmod +x dist/src/bin/npb.js",
+    "build": "yarn tsc && mv dist/src/bin/npb.js dist/src/bin/npb && chmod +x dist/src/bin/npb",
     "watch": "yarn tsc --watch",
     "lint": "eslint 'src/**/*.{ts,tsx}' --quiet --fix"
   },
