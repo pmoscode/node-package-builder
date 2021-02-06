@@ -4,31 +4,38 @@ import {getLogger} from './logger';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as lodash from 'lodash';
+import {isBaseEnvironment, verboseParameters} from './helper';
 
 export class Worker {
     private readonly parsedArgs;
     private readonly logger = getLogger('npb-bin');
     private readonly rootFolder;
+    private readonly packageJsonPath;
+    private readonly environmentJsonPath;
+    private readonly backupJsonPath;
 
     constructor() {
         this.parsedArgs = new ParseArgs().parseArgs();
         this.rootFolder = process.cwd();
+        this.packageJsonPath = path.join(this.rootFolder, 'package.json')
+        this.environmentJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`)
+        this.backupJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name)
     }
 
     public start() {
-        this.debug();
+        verboseParameters(this.logger, this.parsedArgs)
 
-        if (this.parsedArgs.environment.toLowerCase() == '__base__') {
+        if (isBaseEnvironment(this.parsedArgs)) {
             try {
-                fs.copyFileSync(path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name), path.join(this.rootFolder, 'package.json'));
-                fs.unlinkSync(path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name));
+                fs.copyFileSync(this.backupJsonPath, this.packageJsonPath);
+                fs.unlinkSync(this.backupJsonPath);
             } catch (e) {
-                this.logger.error(`Could not find backup file '${this.parsedArgs.backup_name}' inside '${this.parsedArgs.env_dir}'!`);
+                this.logger.error(`Could not find backup file '${this.backupJsonPath}'!`);
                 process.exit(1);
             }
         } else {
             const packageJson = this.getPackageJson();
-            const environmentJson = this.getEnvironment();
+            const environmentJson = this.getEnvironmentJson();
             const mergedPackage = this.mergeJson(packageJson, environmentJson);
             this.writeNewPackage(mergedPackage);
         }
@@ -36,10 +43,10 @@ export class Worker {
 
     private getPackageJson() {
         try {
-            const packageString = fs.readFileSync(path.join(this.rootFolder, 'package.json'), 'utf-8');
+            const packageString = fs.readFileSync(this.packageJsonPath, 'utf-8');
 
-            if (!fs.existsSync(path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name)) && this.parsedArgs.environment.toLowerCase() != '__base__') {
-                fs.copyFileSync(path.join(this.rootFolder, 'package.json'), path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name));
+            if (!fs.existsSync(this.backupJsonPath) && isBaseEnvironment(this.parsedArgs)) {
+                fs.copyFileSync(this.packageJsonPath, this.backupJsonPath);
             }
 
             return JSON.parse(packageString);
@@ -49,26 +56,27 @@ export class Worker {
         }
     }
 
-    private getEnvironment() {
+    private getEnvironmentJson() {
         try {
-            const environmentString = fs.readFileSync(path.join(this.rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`), 'utf-8');
+            const environmentString = fs.readFileSync(this.environmentJsonPath, 'utf-8');
 
             return JSON.parse(environmentString);
         } catch (e) {
-            this.logger.error(`Could not find '${this.parsedArgs.environment}.json' inside '${this.parsedArgs.env_dir}'!`);
+            this.logger.error(`Could not find '${this.environmentJsonPath}'!`);
             process.exit(1);
         }
     }
 
     private mergeJson(packageJson: any, environmentJson: any) {
         let merged;
+
         if (this.parsedArgs.replace) {
             merged = environmentJson;
         } else {
             merged = lodash.merge({}, packageJson, environmentJson);
         }
 
-        if (this.parsedArgs.environment.toLowerCase() != '__base__' && this.parsedArgs.include_environment) {
+        if (!isBaseEnvironment(this.parsedArgs) && this.parsedArgs.include_environment) {
             merged.npbEnv = [
                 this.parsedArgs.environment
             ]
@@ -78,17 +86,13 @@ export class Worker {
     }
 
     private writeNewPackage(mergedPackage: any) {
-        fs.writeFileSync(path.join(this.rootFolder, 'test.json.merged'), JSON.stringify(mergedPackage, null, 2), 'utf-8');
-    }
-
-    private debug() {
-        this.logger.info(this.parsedArgs);
-        this.logger.info(this.parsedArgs.environment);
-        this.logger.info(this.parsedArgs.env_dir);
-        this.logger.info(this.parsedArgs.dry_run);
-        this.logger.info(this.parsedArgs.backup_name);
-        this.logger.info(this.parsedArgs.include_environment);
-        this.logger.info(this.parsedArgs.one_file_environment);
-        this.logger.info(this.parsedArgs.one_file_environment_filename);
+        if(this.parsedArgs.dry_run) {
+            this.logger.info('##################################')
+            this.logger.info('######### DRY-RUN output #########')
+            this.logger.info(JSON.stringify(mergedPackage, null, 4))
+            this.logger.info('##################################')
+        } else {
+            fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
+        }
     }
 }

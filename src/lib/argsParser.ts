@@ -1,5 +1,5 @@
-import { ArgumentParser } from 'argparse';
-import { version } from '../../package.json';
+import {ArgumentParser} from 'argparse';
+import {version} from '../../package.json';
 
 export class ParseArgs {
     private readonly parser;
@@ -32,14 +32,14 @@ export class ParseArgs {
             help: 'Inserts a field into the modified package.json which contains the used environment',
             action: 'store_true',
         });
-        this.parser.add_argument('-o', '--one-file-environment', {
-            help: 'Use only one file for every environment instead of one file per environment',
-            action: 'store_true',
-        });
-        this.parser.add_argument('-f', '--one-file-environment-filename', {
-            help: 'The filename of the environment file which contains all environments (default == environments.json)',
-            default: 'environments.json',
-        });
+        // this.parser.add_argument('-o', '--one-file-environment', {
+        //     help: 'Use only one file for every environment instead of one file per environment',
+        //     action: 'store_true',
+        // });
+        // this.parser.add_argument('-f', '--one-file-environment-filename', {
+        //     help: 'The filename of the environment file which contains all environments (default == environments.json)',
+        //     default: 'environments.json',
+        // });
         this.parser.add_argument('-r', '--replace', {
             help: 'Replaces the package.json instead of a merge. For this, the environment package.json has to be complete.',
             action: 'store_true',
@@ -50,7 +50,7 @@ export class ParseArgs {
         });
     }
 
-    public parseArgs() {
+    public parseArgs(): any {
         return this.parser.parse_args();
     }
 }
