@@ -2,14 +2,14 @@
   "name": "@pmoscode/node-package-builder",
   "version": "0.1.0",
   "description": "A node package helper which assists you in organizing your package.json for multiple environment",
-  "bin": {"npb": "./dist/src/bin/npb.js"},
-  "main": "dist/src/bin/npb.js",
-  "types": "dist/src/bin/npb.d.ts",
+  "bin": {"npb": "./dist/bin/npb.js"},
+  "main": "dist/bin/npb.js",
+  "types": "dist/bin/npb.d.ts",
   "repository": "https://gitlab.com/pmoscode/node-package-builder.git",
   "author": "Peter Motzko <info@pmoscode.de>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc && mv dist/src/bin/npb.js dist/src/bin/npb && chmod +x dist/src/bin/npb",
+    "build": "yarn tsc && chmod +x dist/bin/npb.js",
     "watch": "yarn tsc --watch",
     "lint": "eslint 'src/**/*.{ts,tsx}' --quiet --fix"
   },

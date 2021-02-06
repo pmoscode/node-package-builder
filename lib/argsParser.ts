@@ -1,5 +1,5 @@
 import {ArgumentParser} from 'argparse';
-import {version} from '../../package.json';
+import {version} from '../package.json';
 
 export class ParseArgs {
     private readonly parser;
