@@ -4,6 +4,7 @@ const loggerConfig: ISettingsParam = {
     dateTimeTimezone: 'Europe/Berlin',
     //dateTimePattern: 'day.month.year hour:minute:second.millisecond',
     displayFunctionName: false,
+    displayLoggerName: false,
     displayFilePath: 'hidden',
 };
 

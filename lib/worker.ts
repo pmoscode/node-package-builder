@@ -1,40 +1,23 @@
 import {ParseArgs} from './argsParser';
 import {getLogger} from './logger';
 
-import * as fs from 'fs';
-import * as path from 'path';
 import merge from 'lodash.merge';
-import {existBackup, isBaseEnvironment, verboseParameters} from './helper';
+import {Utils} from './utils';
 
 export class Worker {
-    private readonly parsedArgs;
-    private readonly logger = getLogger('npb-bin');
-    private readonly rootFolder;
-    private readonly packageJsonPath;
-    private readonly environmentJsonPath;
-    private readonly backupJsonPath;
+    private readonly utils: Utils;
+    private readonly logger = getLogger('worker');
 
     constructor() {
-        this.parsedArgs = new ParseArgs().parseArgs();
-        this.rootFolder = process.cwd();
-        this.packageJsonPath = path.join(this.rootFolder, 'package.json');
-        this.environmentJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`);
-        this.backupJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name);
+        this.utils = new Utils(new ParseArgs().parseArgs());
     }
 
     public start() {
-        verboseParameters(this.logger, this.parsedArgs);
-
-        if (isBaseEnvironment(this.parsedArgs)) {
-            try {
-                if(this.parsedArgs.dry_run) {
-                    this.logger.error(`Won't reset package.json because of "dry-run" enabled...`);
-                } else {
-                    fs.copyFileSync(this.backupJsonPath, this.packageJsonPath);
-                    fs.unlinkSync(this.backupJsonPath);
-                }
-            } catch (e) {
-                this.logger.error(`Could not find backup file '${this.backupJsonPath}'!`);
+        if (this.utils.isResetEnvironment()) {
+            if (this.utils.isDryRun()) {
+                this.logger.warn(`Won't reset package.json because of "dry-run" enabled...`);
+            } else {
+                this.utils.restoreBackup();
             }
         } else {
             const packageJson = this.getPackageJson();
@@ -45,45 +28,35 @@ export class Worker {
     }
 
     private getPackageJson() {
-        try {
-            let packageString;
-            if (existBackup(this.backupJsonPath)) {
-                packageString = fs.readFileSync(this.backupJsonPath, 'utf-8');
-            } else {
-                packageString = fs.readFileSync(this.packageJsonPath, 'utf-8');
-                fs.copyFileSync(this.packageJsonPath, this.backupJsonPath);
+        let packageString;
+        if (this.utils.backupExist()) {
+            packageString = this.utils.loadBackupJson();
+        } else {
+            packageString = this.utils.loadPackageJson();
+            if (!this.utils.isDryRun()) {
+                this.utils.backupPackageJson();
             }
-
-            return JSON.parse(packageString);
-        } catch (e) {
-            this.logger.error('Could not find "package.json". Ensure you\'re running this command fron the root of your project.');
-            process.exit(1);
         }
+
+        return JSON.parse(packageString);
     }
 
     private getEnvironmentJson() {
-        try {
-            const environmentString = fs.readFileSync(this.environmentJsonPath, 'utf-8');
-
-            return JSON.parse(environmentString);
-        } catch (e) {
-            this.logger.error(`Could not find '${this.environmentJsonPath}'!`);
-            process.exit(1);
-        }
+        return JSON.parse(this.utils.loadEnvironmentJson());
     }
 
     private mergeJson(packageJson: any, environmentJson: any) {
         let merged;
 
-        if (this.parsedArgs.replace) {
+        if (this.utils.isReplace()) {
             merged = environmentJson;
         } else {
             merged = merge({}, packageJson, environmentJson);
         }
 
-        if (this.parsedArgs.include_environment) {
+        if (this.utils.isIncludeEnvironment()) {
             merged.npbEnv = [
-                this.parsedArgs.environment
+                this.utils.getEnvironment()
             ];
         }
 
@@ -91,13 +64,13 @@ export class Worker {
     }
 
     private writeNewPackage(mergedPackage: any) {
-        if (this.parsedArgs.dry_run) {
+        if (this.utils.isDryRun()) {
             this.logger.info('##################################');
             this.logger.info('######### DRY-RUN output #########');
             this.logger.info(JSON.stringify(mergedPackage, null, 4));
             this.logger.info('##################################');
         } else {
-            fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
+            this.utils.savePackageJson(mergedPackage);
         }
     }
 }
