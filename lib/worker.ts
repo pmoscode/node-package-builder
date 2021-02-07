@@ -4,7 +4,7 @@ import {getLogger} from './logger';
 import * as fs from 'fs';
 import * as path from 'path';
 import merge from 'lodash.merge';
-import {isBaseEnvironment, verboseParameters} from './helper';
+import {existBackup, isBaseEnvironment, verboseParameters} from './helper';
 
 export class Worker {
     private readonly parsedArgs;
@@ -43,9 +43,11 @@ export class Worker {
 
     private getPackageJson() {
         try {
-            const packageString = fs.readFileSync(this.packageJsonPath, 'utf-8');
-
-            if (!fs.existsSync(this.backupJsonPath) && isBaseEnvironment(this.parsedArgs)) {
+            let packageString;
+            if (existBackup(this.backupJsonPath)) {
+                packageString = fs.readFileSync(this.backupJsonPath, 'utf-8');
+            } else {
+                packageString = fs.readFileSync(this.packageJsonPath, 'utf-8');
                 fs.copyFileSync(this.packageJsonPath, this.backupJsonPath);
             }
 
@@ -76,7 +78,7 @@ export class Worker {
             merged = merge({}, packageJson, environmentJson);
         }
 
-        if (!isBaseEnvironment(this.parsedArgs) && this.parsedArgs.include_environment) {
+        if (this.parsedArgs.include_environment) {
             merged.npbEnv = [
                 this.parsedArgs.environment
             ];

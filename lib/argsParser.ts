@@ -17,7 +17,7 @@ export class ParseArgs {
             nargs: '?',
         });
         this.parser.add_argument('-e', '--env-dir', {
-            help: 'path to environment files',
+            help: 'path to environment files (default == envs)',
             default: 'envs',
         });
         this.parser.add_argument('-d', '--dry-run', {
