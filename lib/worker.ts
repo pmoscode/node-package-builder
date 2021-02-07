@@ -27,11 +27,14 @@ export class Worker {
 
         if (isBaseEnvironment(this.parsedArgs)) {
             try {
-                fs.copyFileSync(this.backupJsonPath, this.packageJsonPath);
-                fs.unlinkSync(this.backupJsonPath);
+                if(this.parsedArgs.dry_run) {
+                    this.logger.error(`Won't reset package.json because of "dry-run" enabled...`);
+                } else {
+                    fs.copyFileSync(this.backupJsonPath, this.packageJsonPath);
+                    fs.unlinkSync(this.backupJsonPath);
+                }
             } catch (e) {
                 this.logger.error(`Could not find backup file '${this.backupJsonPath}'!`);
-                process.exit(1);
             }
         } else {
             const packageJson = this.getPackageJson();
