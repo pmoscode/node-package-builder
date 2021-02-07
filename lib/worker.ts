@@ -3,7 +3,7 @@ import {getLogger} from './logger';
 
 import * as fs from 'fs';
 import * as path from 'path';
-import * as lodash from 'lodash';
+import merge from 'lodash.merge';
 import {isBaseEnvironment, verboseParameters} from './helper';
 
 export class Worker {
@@ -17,13 +17,13 @@ export class Worker {
     constructor() {
         this.parsedArgs = new ParseArgs().parseArgs();
         this.rootFolder = process.cwd();
-        this.packageJsonPath = path.join(this.rootFolder, 'package.json')
-        this.environmentJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`)
-        this.backupJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name)
+        this.packageJsonPath = path.join(this.rootFolder, 'package.json');
+        this.environmentJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`);
+        this.backupJsonPath = path.join(this.rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name);
     }
 
     public start() {
-        verboseParameters(this.logger, this.parsedArgs)
+        verboseParameters(this.logger, this.parsedArgs);
 
         if (isBaseEnvironment(this.parsedArgs)) {
             try {
@@ -73,24 +73,24 @@ export class Worker {
         if (this.parsedArgs.replace) {
             merged = environmentJson;
         } else {
-            merged = lodash.merge({}, packageJson, environmentJson);
+            merged = merge({}, packageJson, environmentJson);
         }
 
         if (!isBaseEnvironment(this.parsedArgs) && this.parsedArgs.include_environment) {
             merged.npbEnv = [
                 this.parsedArgs.environment
-            ]
+            ];
         }
 
         return merged;
     }
 
     private writeNewPackage(mergedPackage: any) {
-        if(this.parsedArgs.dry_run) {
-            this.logger.info('##################################')
-            this.logger.info('######### DRY-RUN output #########')
-            this.logger.info(JSON.stringify(mergedPackage, null, 4))
-            this.logger.info('##################################')
+        if (this.parsedArgs.dry_run) {
+            this.logger.info('##################################');
+            this.logger.info('######### DRY-RUN output #########');
+            this.logger.info(JSON.stringify(mergedPackage, null, 4));
+            this.logger.info('##################################');
         } else {
             fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
         }
