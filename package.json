@@ -9,7 +9,7 @@
   "author": "Peter Motzko <info@pmoscode.de>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc && chmod +x dist/bin/npb.js",
+    "build": "yarn tsc && chmod +x dist/bin/npb.js && cp LICENSE dist",
     "watch": "yarn tsc --watch",
     "lint": "eslint '**/*.{ts,tsx}' --quiet --fix"
   },
@@ -17,9 +17,6 @@
     "argparse": "^2.0.1",
     "lodash.merge": "^4.6.2",
     "tslog": "^3.1.1"
-  },
-  "peerDependencies": {
-    "lodash": "^4.17.20"
   },
   "devDependencies": {
     "@types/argparse": "^2.0.5",
