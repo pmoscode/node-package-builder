@@ -1,6 +1,6 @@
 {
   "entryPoints": ["bin", "lib"],
-  "out": "docs",
+  "out": "public",
   "name": "Node Package Builder",
   "readme": "Readme.md"
 }
