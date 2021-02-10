@@ -53,3 +53,12 @@ publish_package:
       } || {
         echo "No new version of ${NPM_PACKAGE_NAME} published. This is most likely because version ${NPM_PACKAGE_VERSION} already exists in GitLab's NPM registry."
       }
+
+pages:
+  stage: deploy
+  script:
+    - yarn install
+    - typedoc
+  artifacts:
+    paths:
+      - docs

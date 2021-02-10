@@ -1,16 +1,35 @@
 import {ArgumentParser} from 'argparse';
 import {version} from '../package.json';
 
+/**
+ * This class defines all arguments which can be passed to the Node Package Builder.
+ * It also parses the cli input.
+ */
 export class ParseArgs {
-    private readonly parser;
+    /**
+     * Is the main ArgumentParser object.
+     *
+     * @private
+     */
+    private readonly parser: ArgumentParser;
 
+    /**
+     * The constructor (instantiates the ArgumentParser)
+     */
     constructor() {
         this.parser = new ArgumentParser({
             description:
                 'A node package helper which assists you in organizing your test.json for multiple environment.',
             add_help: true
         });
+    }
 
+    /**
+     * Here the whole arguments are build together.
+     *
+     * @returns The ParsArgs object
+     */
+    public build(): ParseArgs {
         this.parser.add_argument('environment', {
             help: 'The name of the environment to apply to package.json',
             default: '__reset__',
@@ -45,8 +64,15 @@ export class ParseArgs {
             action: 'version',
             version
         });
+
+        return this;
     }
 
+    /**
+     * Parses the cli inputs
+     *
+     * @returns An object with the parsed parameters
+     */
     public parseArgs(): any {
         return this.parser.parse_args();
     }
