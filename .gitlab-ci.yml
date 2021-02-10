@@ -58,7 +58,7 @@ pages:
   stage: deploy
   script:
     - yarn install
-    - typedoc
+    - node_modules/.bin/typedoc
   artifacts:
     paths:
       - docs
