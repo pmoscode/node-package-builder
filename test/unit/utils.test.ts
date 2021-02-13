@@ -1,7 +1,6 @@
-import {mocked} from 'ts-jest/utils';
-
 jest.mock('fs');
 
+import {mocked} from 'ts-jest/utils';
 import {Utils} from '../../lib/utils';
 import fs from 'fs';
 

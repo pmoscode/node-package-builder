@@ -1,4 +1,4 @@
-import {ParseArgs} from './argsParser';
+import {ParseArgs} from './parseArgs';
 import {getLogger} from './logger';
 
 import merge from 'lodash.merge';
@@ -27,8 +27,9 @@ export class Worker {
      */
     constructor() {
         const parsedArgs: ParseArgs = new ParseArgs()
+        parsedArgs.build()
 
-        this.utils = new Utils(parsedArgs.build().parseArgs());
+        this.utils = new Utils(parsedArgs.parseArgs());
     }
 
     /**

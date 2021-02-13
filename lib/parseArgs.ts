@@ -29,7 +29,7 @@ export class ParseArgs {
      *
      * @returns The ParsArgs object
      */
-    public build(): ParseArgs {
+    public build() {
         this.parser.add_argument('environment', {
             help: 'The name of the environment to apply to package.json',
             default: '__reset__',
@@ -64,8 +64,6 @@ export class ParseArgs {
             action: 'version',
             version
         });
-
-        return this;
     }
 
     /**
