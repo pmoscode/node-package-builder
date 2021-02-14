@@ -4,9 +4,9 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
-default:
+validate_package_scope:
   image: node:12
-
+  stage: build
   before_script:
     - |
       if [[ ! -f package.json ]]; then
@@ -16,9 +16,6 @@ default:
       fi
     - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
     - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
-
-validate_package_scope:
-  stage: build
   script:
     - |
       if [[ ! $NPM_PACKAGE_NAME =~ ^@$CI_PROJECT_ROOT_NAMESPACE/ ]]; then
@@ -28,6 +25,7 @@ validate_package_scope:
       fi
 
 create_npmrc:
+  image: node:12
   stage: build
   script:
     - |
@@ -46,9 +44,19 @@ create_npmrc:
       - .npmrc
 
 publish_package:
+  image: node:12
   stage: deploy
   dependencies:
     - create_npmrc
+  before_script:
+    - |
+      if [[ ! -f package.json ]]; then
+        echo "No package.json found! A package.json file is required to publish a package to GitLab's NPM registry."
+        echo 'For more information, see https://docs.gitlab.com/ee/user/packages/npm_registry/#creating-a-project'
+        exit 1
+      fi
+    - NPM_PACKAGE_NAME=$(node -p "require('./package.json').name")
+    - NPM_PACKAGE_VERSION=$(node -p "require('./package.json').version")
   script:
     - |
       {
@@ -61,6 +69,7 @@ publish_package:
       }
 
 pages:
+  image: node:12
   stage: deploy
   script:
     - yarn install
