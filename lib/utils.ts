@@ -89,7 +89,7 @@ export class Utils {
      * @returns True / False
      */
     public isDryRun(): boolean {
-        return this.parsedArgs.replace.dry_run;
+        return this.parsedArgs.dry_run;
     }
 
     /**
@@ -141,7 +141,7 @@ export class Utils {
             return fs.readFileSync(this.packageJsonPath, 'utf-8');
         } catch (e) {
             this.logError('Could not load "package.json". Ensure you\'re running this command fron the root of your project.', e);
-            process.exit(1);
+            throw new Error('exit')
         }
     }
 
@@ -155,7 +155,7 @@ export class Utils {
             return fs.readFileSync(this.backupJsonPath, 'utf-8');
         } catch (e) {
             this.logError('Could not load backup file ".package.json"...', e);
-            process.exit(1);
+            throw new Error('exit')
         }
     }
 
@@ -169,7 +169,7 @@ export class Utils {
             return fs.readFileSync(this.environmentJsonPath, 'utf-8');
         } catch (e) {
             this.logError(`Could not load environment file "${this.environmentJsonPath}"...`, e);
-            process.exit(1);
+            throw new Error('exit')
         }
     }
 
@@ -181,7 +181,7 @@ export class Utils {
             fs.copyFileSync(this.packageJsonPath, this.backupJsonPath);
         } catch (e) {
             this.logError('Could not make backup of "package.json"...', e);
-            process.exit(1);
+            throw new Error('exit')
         }
     }
 
@@ -195,7 +195,7 @@ export class Utils {
             fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
         } catch (e) {
             this.logError('Could not save new "package.json"...', e);
-            process.exit(1);
+            throw new Error('exit')
         }
     }
 
@@ -217,8 +217,8 @@ export class Utils {
      * Used for debugging purposes. (Prints the parsed cli parameters to console.)
      */
     public verboseParameters() {
-        Object.keys(this.parsedArgs).forEach(key => {
+        for (const key of Object.keys(this.parsedArgs)) {
             this.logger.info(`Key: ${key} ==> Value: ${this.parsedArgs[key]}`);
-        });
+        }
     }
 }

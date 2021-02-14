@@ -27,9 +27,9 @@ const checkFixtureMatch = (fileName: string, matchFile: string) => {
 
 describe('Testing NPB CLI', function () {
     beforeEach(() => {
-        process.argv = process.argv.slice(0, 2)
+        process.argv = process.argv.slice(0, 2);
         jest.spyOn(process, 'cwd').mockReturnValue(testRoot);
-    })
+    });
 
     afterEach(() => {
         if (fs.existsSync(path.join(testRoot, 'envs', '.package.json'))) {
@@ -67,14 +67,41 @@ describe('Testing NPB CLI', function () {
         checkFileExist(bkpName);
         checkFixtureMatch(pkgName, fixtures.dev);
 
-        process.argv = process.argv.slice(0, 2)
+        process.argv = process.argv.slice(0, 2);
 
         worker = new Worker();
         worker.start();
 
         if (fs.existsSync(path.join(testRoot, 'envs', bkpName))) {
-            fail('backup should be deleted!')
+            fail('backup should be deleted!');
         }
     });
+
+    it('should output a log message when dry-run is enabled and the environment is about to be reset', () => {
+        process.argv.push('--dry-run');
+
+        let worker: Worker = new Worker();
+        const spyonIsEnvironment = jest.spyOn((worker as any).utils, 'isResetEnvironment');
+        const spyonIsDryRun = jest.spyOn((worker as any).utils, 'isDryRun');
+        const spyonLogger = jest.spyOn((worker as any).logger, 'warn');
+
+        worker.start();
+
+        expect(spyonIsEnvironment).toHaveBeenCalled();
+        expect(spyonIsDryRun.mock.results[0].value).toEqual(true);
+        expect(spyonLogger).toHaveBeenCalled();
+    });
+
+    it('should write to console, when "dry-run" is set', () => {
+        process.argv.push('--dry-run');
+        process.argv.push('dev');
+
+        let worker: Worker = new Worker();
+        const spyonLogger = jest.spyOn((worker as any).logger, 'info');
+
+        worker.start()
+
+        expect(spyonLogger).toHaveBeenCalledTimes(4);
+    })
 });
 
