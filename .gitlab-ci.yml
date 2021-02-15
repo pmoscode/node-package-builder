@@ -4,6 +4,11 @@ include:
   - template: Security/SAST.gitlab-ci.yml
   - template: Security/Secret-Detection.gitlab-ci.yml
 
+stages:
+  - build
+  - test
+  - deploy
+
 validate_package_scope:
   image: node:12
   stage: build
@@ -42,6 +47,13 @@ create_npmrc:
   artifacts:
     paths:
       - .npmrc
+
+Unit tests:
+  image: node:12
+  stage: test
+  script:
+    - jest --coverage
+  coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 publish_package:
   image: node:12
