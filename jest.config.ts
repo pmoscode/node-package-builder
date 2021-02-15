@@ -5,6 +5,10 @@ import type {Config} from '@jest/types';
 const config: Config.InitialOptions = {
     verbose: true,
     collectCoverage: true,
+    reporters: [
+        'default',
+        'jest-junit'
+    ],
     testPathIgnorePatterns: [
         "<rootDir>/dist"
     ],

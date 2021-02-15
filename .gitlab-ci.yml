@@ -55,6 +55,11 @@ Unit tests:
     - yarn install
     - yarn test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
+  artifacts:
+    when: always
+    reports:
+      junit:
+        - junit.xml
 
 publish_package:
   image: node:12
