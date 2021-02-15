@@ -52,7 +52,8 @@ Unit tests:
   image: node:12
   stage: test
   script:
-    - jest --coverage
+    - yarn install
+    - yarn test
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
 
 publish_package:
