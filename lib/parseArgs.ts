@@ -19,7 +19,7 @@ export class ParseArgs {
     constructor() {
         this.parser = new ArgumentParser({
             description:
-                'A node package helper which assists you in organizing your test.json for multiple environment.',
+                'A node package helper which assists you in organizing your package.json for multiple environment.',
             add_help: true,
         });
     }
