@@ -57,6 +57,8 @@ Unit tests:
   coverage: /All\sfiles.*?\s+(\d+.\d+)/
   artifacts:
     when: always
+    paths:
+      - coverage/lcov-report
     reports:
       junit:
         - junit.xml

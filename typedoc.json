@@ -3,5 +3,9 @@
   "out": "public",
   "name": "Node Package Builder",
   "readme": "Readme.md",
-  "includeVersion": true
+  "includeVersion": true,
+  "links": [{
+    "label": "Code Coverage",
+    "url": "lcov-report/index.html"
+  }]
 }
