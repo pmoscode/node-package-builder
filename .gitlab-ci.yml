@@ -91,9 +91,12 @@ publish_package:
 pages:
   image: node:12
   stage: deploy
+  dependencies:
+    - Unit tests
   script:
     - yarn install
     - node_modules/.bin/typedoc
+    - cp coverage public
   artifacts:
     paths:
       - public
