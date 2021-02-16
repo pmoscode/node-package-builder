@@ -12,7 +12,7 @@ With NPB you can easily manage these challenges.
 
 ## Installation
 
-Local install:
+Local installation:
 
 ```
 npm install @pmoscode/node-package-builder
@@ -24,7 +24,7 @@ or
 yarn add @pmoscode/node-package-builder --dev
 ```
 
-Global install:
+Global installation:
 
 ```
 npm install -g @pmoscode/node-package-builder
