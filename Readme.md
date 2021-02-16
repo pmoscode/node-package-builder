@@ -117,3 +117,8 @@ npb
 | -r | --replace | Replaces the package.json instead of a merge. For this, the environment package.json has to be complete. | false |
 | -v | --verbose | Select level of verbosity (max: 2) | 0 |
 | -- | --version | Shows current version | -- |
+
+## Code documentation
+
+Here you can find the Code documentation:
+https://pmoscode.gitlab.io/node-package-builder/

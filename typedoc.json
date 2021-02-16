@@ -2,5 +2,6 @@
   "entryPoints": ["bin", "lib"],
   "out": "public",
   "name": "Node Package Builder",
-  "readme": "Readme.md"
+  "readme": "Readme.md",
+  "includeVersion": true
 }
