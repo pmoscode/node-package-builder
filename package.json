@@ -20,7 +20,9 @@
     "build": "yarn tsc && ./prepare_npm_publish.sh",
     "watch": "yarn tsc --watch",
     "lint": "eslint '**/*.{ts,tsx}' --quiet --fix",
-    "test": "jest"
+    "test": "jest",
+    "bump:minor": "yarn version --minor",
+    "bump:patch": "yarn version --patch"
   },
   "dependencies": {
     "argparse": "^2.0.1",
