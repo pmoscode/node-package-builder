@@ -5,6 +5,12 @@
   "bin": {
     "npb": "bin/npb.js"
   },
+  "keywords": [
+    "npm",
+    "package.json",
+    "staging",
+    "merge"
+  ],
   "main": "bin/npb.js",
   "types": "bin/npb.d.ts",
   "repository": "https://gitlab.com/pmoscode/node-package-builder.git",
