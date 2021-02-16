@@ -59,8 +59,9 @@ pages:
   stage: deploy
   needs:
     - publish_package_npm
+    - tests
   dependencies:
-    - unit_tests
+    - tests
   script:
     - yarn install
     - node_modules/.bin/typedoc --theme node_modules/typedoc-neo-theme/bin/default/
