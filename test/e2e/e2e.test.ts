@@ -1,8 +1,7 @@
-import {Worker} from '../../lib/worker';
+import { Worker } from '../../lib/worker';
 import path from 'path';
 import * as fs from 'fs';
 import assert from 'assert';
-
 
 const fixturesRoot = path.join(__dirname, 'fixtures');
 const testRoot = path.join(__dirname, 'app');
@@ -10,9 +9,9 @@ const pkgName = 'package.json';
 const bkpName = '.package.json';
 
 const fixtures = {
-    'dev': fs.readFileSync(path.join(fixturesRoot, 'package-dev.json'), 'utf8'),
-    'test': fs.readFileSync(path.join(fixturesRoot, 'package-test.json'), 'utf8'),
-    'base': fs.readFileSync(path.join(fixturesRoot, 'package-base.json'), 'utf8')
+    dev: fs.readFileSync(path.join(fixturesRoot, 'package-dev.json'), 'utf8'),
+    test: fs.readFileSync(path.join(fixturesRoot, 'package-test.json'), 'utf8'),
+    base: fs.readFileSync(path.join(fixturesRoot, 'package-base.json'), 'utf8'),
 };
 
 const checkFileExist = (fileName: string) => {
@@ -99,9 +98,8 @@ describe('Testing NPB CLI', function () {
         let worker: Worker = new Worker();
         const spyonLogger = jest.spyOn((worker as any).logger, 'info');
 
-        worker.start()
+        worker.start();
 
         expect(spyonLogger).toHaveBeenCalledTimes(4);
-    })
+    });
 });
-

@@ -11,7 +11,7 @@
   "author": "Peter Motzko <info@pmoscode.de>",
   "license": "MIT",
   "scripts": {
-    "build": "yarn tsc && chmod +x dist/bin/npb.js && cp LICENSE dist",
+    "build": "yarn tsc && ./prepare_npm_publish.sh",
     "watch": "yarn tsc --watch",
     "lint": "eslint '**/*.{ts,tsx}' --quiet --fix",
     "test": "jest"

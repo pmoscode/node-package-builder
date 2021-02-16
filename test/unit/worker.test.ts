@@ -1,7 +1,6 @@
-import {Worker} from '../../lib/worker';
+import { Worker } from '../../lib/worker';
 
 describe('Testing Worker class', () => {
-
     test('getPackageJson should return proper content if backup exists', () => {
         const worker: Worker = new Worker();
 
@@ -11,25 +10,25 @@ describe('Testing Worker class', () => {
         const spyOnLoadBackupJson = jest.spyOn(workerUtil, 'loadBackupJson').mockReturnValue('{"test": true}');
         const spyOnLoadPackageJson = jest.spyOn(workerUtil, 'loadPackageJson').mockReturnValue('{"test": false}');
 
-        const workerAny = (worker as any);
+        const workerAny = worker as any;
         const returnObj = workerAny.getPackageJson();
 
         expect(spyOnIsBackupExisting).toHaveBeenCalled();
         expect(spyOnLoadBackupJson).toHaveBeenCalled();
-        expect(returnObj).toStrictEqual({test: true});
+        expect(returnObj).toStrictEqual({ test: true });
         expect(spyOnLoadPackageJson).not.toHaveBeenCalled();
     });
 
     test('mergeJson should return replaced content if replace flag is set in cli parameters', () => {
         const environmentJson = {
             test: 'one',
-            go: 'two'
-        }
+            go: 'two',
+        };
 
         const packageJson = {
             fake: 'three',
-            bye: 'four'
-        }
+            bye: 'four',
+        };
 
         const worker: Worker = new Worker();
 
@@ -37,7 +36,7 @@ describe('Testing Worker class', () => {
 
         const spyOnIsReplace = jest.spyOn(workerUtil, 'isReplace').mockReturnValue(true);
 
-        const workerAny = (worker as any);
+        const workerAny = worker as any;
         const returnObj = workerAny.mergeJson(packageJson, environmentJson);
 
         expect(spyOnIsReplace).toHaveBeenCalled();
@@ -46,20 +45,18 @@ describe('Testing Worker class', () => {
 
     test('mergeJson should return content eytended by the environment name if "--include-environment" flag is set in cli parameters', () => {
         const environmentJson = {
-            test: 'one'
-        }
+            test: 'one',
+        };
 
         const packageJson = {
-            fake: 'three'
-        }
+            fake: 'three',
+        };
 
         const result = {
             test: 'one',
             fake: 'three',
-            npbEnv: [
-                'testing'
-            ]
-        }
+            npbEnv: ['testing'],
+        };
 
         const worker: Worker = new Worker();
 
@@ -68,7 +65,7 @@ describe('Testing Worker class', () => {
         const spyOnIsReplace = jest.spyOn(workerUtil, 'isIncludeEnvironment').mockReturnValue(true);
         const spyOngetEnvironment = jest.spyOn(workerUtil, 'getEnvironment').mockReturnValue('testing');
 
-        const workerAny = (worker as any);
+        const workerAny = worker as any;
         const returnObj = workerAny.mergeJson(packageJson, environmentJson);
 
         expect(spyOnIsReplace).toHaveBeenCalled();

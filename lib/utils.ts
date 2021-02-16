@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {getLogger} from './logger';
+import { getLogger } from './logger';
 
 /**
  * This is the util class for the worker.
@@ -43,7 +43,11 @@ export class Utils {
     constructor(private parsedArgs: any) {
         const rootFolder = process.cwd();
         this.packageJsonPath = path.join(rootFolder, 'package.json');
-        this.environmentJsonPath = path.join(rootFolder, this.parsedArgs.env_dir, `${this.parsedArgs.environment}.json`);
+        this.environmentJsonPath = path.join(
+            rootFolder,
+            this.parsedArgs.env_dir,
+            `${this.parsedArgs.environment}.json`,
+        );
         this.backupJsonPath = path.join(rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name);
     }
 
@@ -140,8 +144,11 @@ export class Utils {
         try {
             return fs.readFileSync(this.packageJsonPath, 'utf-8');
         } catch (e) {
-            this.logError('Could not load "package.json". Ensure you\'re running this command fron the root of your project.', e);
-            throw new Error('exit')
+            this.logError(
+                'Could not load "package.json". Ensure you\'re running this command fron the root of your project.',
+                e,
+            );
+            throw new Error('exit');
         }
     }
 
@@ -155,7 +162,7 @@ export class Utils {
             return fs.readFileSync(this.backupJsonPath, 'utf-8');
         } catch (e) {
             this.logError('Could not load backup file ".package.json"...', e);
-            throw new Error('exit')
+            throw new Error('exit');
         }
     }
 
@@ -169,7 +176,7 @@ export class Utils {
             return fs.readFileSync(this.environmentJsonPath, 'utf-8');
         } catch (e) {
             this.logError(`Could not load environment file "${this.environmentJsonPath}"...`, e);
-            throw new Error('exit')
+            throw new Error('exit');
         }
     }
 
@@ -181,7 +188,7 @@ export class Utils {
             fs.copyFileSync(this.packageJsonPath, this.backupJsonPath);
         } catch (e) {
             this.logError('Could not make backup of "package.json"...', e);
-            throw new Error('exit')
+            throw new Error('exit');
         }
     }
 
@@ -195,7 +202,7 @@ export class Utils {
             fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
         } catch (e) {
             this.logError('Could not save new "package.json"...', e);
-            throw new Error('exit')
+            throw new Error('exit');
         }
     }
 

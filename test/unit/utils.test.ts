@@ -1,7 +1,7 @@
 jest.mock('fs');
 jest.mock('tslog');
 
-import {Utils} from '../../lib/utils';
+import { Utils } from '../../lib/utils';
 import fs from 'fs';
 
 describe('Testing Util class', () => {
@@ -12,7 +12,7 @@ describe('Testing Util class', () => {
         backup_name: '.package.json',
         include_environment: false,
         replace: false,
-        verbose: 0
+        verbose: 0,
     };
 
     test('basic bool Tests', () => {
@@ -42,9 +42,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.readFileSync = jest.fn().mockImplementation(() => {
-            throw new Error()
+            throw new Error();
         });
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
 
         try {
             utils.loadEnvironmentJson();
@@ -69,9 +69,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.readFileSync = jest.fn().mockImplementation(() => {
-            throw new Error()
+            throw new Error();
         });
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
 
         try {
             utils.loadBackupJson();
@@ -96,9 +96,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.readFileSync = jest.fn().mockImplementation(() => {
-            throw new Error()
+            throw new Error();
         });
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
 
         try {
             utils.loadPackageJson();
@@ -121,9 +121,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.copyFileSync = jest.fn().mockImplementation(() => {
-            throw new Error()
+            throw new Error();
         });
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
 
         try {
             utils.backupPackageJson();
@@ -148,9 +148,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.copyFileSync = jest.fn();
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
         fs.unlinkSync = jest.fn().mockImplementation(() => {
-            throw new Error()
+            throw new Error();
         });
 
         try {
@@ -166,9 +166,9 @@ describe('Testing Util class', () => {
         const utils: Utils = new Utils(testArgs);
 
         fs.writeFileSync = jest.fn(() => {
-            throw new Error('Fake mock error')
+            throw new Error('Fake mock error');
         });
-        const spyon = jest.spyOn((utils as any), 'logError')
+        const spyon = jest.spyOn(utils as any, 'logError');
 
         try {
             utils.savePackageJson({});
@@ -188,8 +188,8 @@ describe('Testing Util class', () => {
     });
 
     test('log error with -vv', () => {
-        const testArgsVerbose = {...testArgs} // JSON.parse(JSON.stringify(testArgs))
-        testArgsVerbose.verbose = 2
+        const testArgsVerbose = { ...testArgs }; // JSON.parse(JSON.stringify(testArgs))
+        testArgsVerbose.verbose = 2;
 
         const utils: Utils = new Utils(testArgsVerbose);
 

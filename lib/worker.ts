@@ -1,8 +1,8 @@
-import {ParseArgs} from './parseArgs';
-import {getLogger} from './logger';
+import { ParseArgs } from './parseArgs';
+import { getLogger } from './logger';
 
 import merge from 'lodash.merge';
-import {Utils} from './utils';
+import { Utils } from './utils';
 
 /**
  * The main class of the Node Package Builder. Handels the whole workflow.
@@ -26,8 +26,8 @@ export class Worker {
      * The constructor parses the cli arguments and instantiate the Util class.
      */
     constructor() {
-        const parsedArgs: ParseArgs = new ParseArgs()
-        parsedArgs.build()
+        const parsedArgs: ParseArgs = new ParseArgs();
+        parsedArgs.build();
 
         this.utils = new Utils(parsedArgs.parseArgs());
     }
@@ -102,9 +102,7 @@ export class Worker {
         }
 
         if (this.utils.isIncludeEnvironment()) {
-            merged.npbEnv = [
-                this.utils.getEnvironment()
-            ];
+            merged.npbEnv = [this.utils.getEnvironment()];
         }
 
         return merged;
