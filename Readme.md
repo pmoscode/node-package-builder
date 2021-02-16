@@ -59,7 +59,7 @@ Let's take this as an example:
 
 **cf.json**
 
-Here an example for an imaginary cloud foundry change (place it in "envs" folder):
+Here an example for an imaginary cloud foundry change (place it in "envs" folder by default):
 
 ```json
 {
