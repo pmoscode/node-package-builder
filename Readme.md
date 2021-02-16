@@ -1,5 +1,9 @@
 # The Node Package Builder
 
+![Pipeline](https://gitlab.com/pmoscode/node-package-builder/badges/master/pipeline.svg)
+
+![coverage](https://gitlab.com/pmoscode/node-package-builder/badges/master/coverage.svg)
+
 This simple helper gets handy if you have to manage multiple package.json versions in one Node project.
 
 So, why would you need that? For example if you have an application, module or ... and you need to run it on different
