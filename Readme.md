@@ -10,6 +10,9 @@ architectures, like amd64, armV6, armV7, ... or you have multiple targets (nativ
 
 With NPB you can easily manage these challenges.
 
+
+You need NodeJS version > 14.15 or 16.10 or 18.0
+
 ## Installation
 
 Local installation:
