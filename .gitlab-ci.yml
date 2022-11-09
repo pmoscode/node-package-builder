@@ -51,7 +51,7 @@ publish_package_npm:
     - yarn install
     - yarn build
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-    - npm publish dist --access public
+    - npm publish --access public
   only:
     - tags
 
