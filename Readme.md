@@ -113,16 +113,16 @@ npb
 
 ## CLI parameters
 
-| Short  | Long  | Description  | Default  |
-| --- | --- | --- | --- |
-| --  | environment | The name of the environment to apply to package.json | \_\_reset__ (to restore the original package.json)  |
-| -e | --env-dir | path to environment files | envs |
-| -d | --dry-run | Shows only the result. No modification of package.json done | false |
-| -b | --backup-name | Name of the package.json backup file. Restored when calling without any environment | .package.json  |
-| -i | --include-environment | Inserts a field into the modified package.json which contains the used environment | false |
-| -r | --replace | Replaces the package.json instead of a merge. For this, the environment package.json has to be complete. | false |
-| -v | --verbose | Select level of verbosity (max: 2) | 0 |
-| -- | --version | Shows current version | -- |
+| Short | Long                  | Description                                                                                              | Default                                            |
+|-------|-----------------------|----------------------------------------------------------------------------------------------------------|----------------------------------------------------|
+| --    | environment           | The name of the environment to apply to package.json                                                     | \_\_reset__ (to restore the original package.json) |
+| -e    | --env-dir             | path to environment files                                                                                | envs                                               |
+| -d    | --dry-run             | Shows only the result. No modification of package.json done                                              | false                                              |
+| -b    | --backup-name         | Name of the package.json backup file. Restored when calling without any environment                      | .package.json                                      |
+| -i    | --include-environment | Inserts a field into the modified package.json which contains the used environment                       | false                                              |
+| -r    | --replace             | Replaces the package.json instead of a merge. For this, the environment package.json has to be complete. | false                                              |
+| -v    | --verbose             | Select level of verbosity (max: 2)                                                                       | 0                                                  |
+| --    | --version             | Shows current version                                                                                    | --                                                 |
 
 ## Code documentation
 
