@@ -4,7 +4,7 @@ import { getLogger } from './logger';
 
 /**
  * This is the util class for the worker.
- * It handels the path operation, the load and save of the packages (json) and provides a simple way of checking the passed cli args.
+ * It handles the path operation, the load and save of the packages (json) and provides a simple way of checking the passed cli args.
  */
 export class Utils {
     /**
