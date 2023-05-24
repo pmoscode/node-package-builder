@@ -8,8 +8,12 @@ tsconfig.json
 tslint.json
 test/
 pipeline/
+theme/
 CODE_OF_CONDUCT.md
 COLLABORATOR_GUIDE.md
 CONTRIBUTING.md
 .gitlab-ci.yml
-
+prepare_npm_publish.sh
+typedoc.json
+jest.config.ts
+coverage/**
