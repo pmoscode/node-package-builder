@@ -1,14 +1,5 @@
-import { ISettingsParam, Logger } from 'tslog';
-
-/**
- * The logger configuration
- */
-const loggerConfig: ISettingsParam = {
-    dateTimeTimezone: 'Europe/Berlin',
-    displayFunctionName: false,
-    displayLoggerName: false,
-    displayFilePath: 'hidden',
-};
+import {Logger} from 'tslog';
+import {ILogObj} from 'tslog/dist/types/interfaces';
 
 /**
  * Instantiates the Logger for a given name. The name is usually the class name, so that it makes it easier to debug the code.
@@ -16,9 +7,7 @@ const loggerConfig: ISettingsParam = {
  * @param name Name of the instantiated logger
  */
 export function getLogger(name: string) {
-    const conf: ISettingsParam = {
+    return new Logger<ILogObj>({
         name: name,
-    };
-
-    return new Logger({ ...loggerConfig, ...conf });
+    });
 }
