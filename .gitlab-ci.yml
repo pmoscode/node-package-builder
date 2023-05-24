@@ -16,9 +16,7 @@ check version:
   stage: check
   before_script:
     - apk add jq curl git bash
-    - npm install npm-check-updates@16.10.12
-    - git config --global user.name "$GITLAB_USER_LOGIN"
-    - git config --global user.email "$GITLAB_USER_EMAIL"
+    - npm install -g npm-check-updates@16.10.12
   script:
     - ./pipeline/prepare.sh
   only:
