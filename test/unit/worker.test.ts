@@ -1,4 +1,4 @@
-import { Worker } from '../../lib/worker';
+import {Worker} from '../../lib/worker';
 
 describe('Testing Worker class', () => {
     test('getPackageJson should return proper content if backup exists', () => {
@@ -15,7 +15,7 @@ describe('Testing Worker class', () => {
 
         expect(spyOnIsBackupExisting).toHaveBeenCalled();
         expect(spyOnLoadBackupJson).toHaveBeenCalled();
-        expect(returnObj).toStrictEqual({ test: true });
+        expect(returnObj).toStrictEqual({test: true});
         expect(spyOnLoadPackageJson).not.toHaveBeenCalled();
     });
 

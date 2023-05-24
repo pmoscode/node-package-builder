@@ -1,4 +1,4 @@
-import { Worker } from '../../lib/worker';
+import {Worker} from '../../lib/worker';
 import path from 'path';
 import * as fs from 'fs';
 import assert from 'assert';

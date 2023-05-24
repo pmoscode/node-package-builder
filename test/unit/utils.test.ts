@@ -1,7 +1,7 @@
 jest.mock('fs');
 jest.mock('tslog');
 
-import { Utils } from '../../lib/utils';
+import {Utils} from '../../lib/utils';
 import fs from 'fs';
 
 describe('Testing Util class', () => {
@@ -48,7 +48,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadEnvironmentJson();
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.readFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
@@ -75,7 +76,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadBackupJson();
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.readFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
@@ -102,7 +104,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadPackageJson();
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.readFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
@@ -127,7 +130,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.backupPackageJson();
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.readFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
@@ -155,7 +159,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.restoreBackup();
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.copyFileSync).toHaveBeenCalled();
         expect(fs.unlinkSync).toHaveBeenCalled();
@@ -172,7 +177,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.savePackageJson({});
-        } catch (e) {}
+        } catch (e) {
+        }
 
         expect(fs.writeFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
@@ -188,7 +194,7 @@ describe('Testing Util class', () => {
     });
 
     test('log error with -vv', () => {
-        const testArgsVerbose = { ...testArgs }; // JSON.parse(JSON.stringify(testArgs))
+        const testArgsVerbose = {...testArgs}; // JSON.parse(JSON.stringify(testArgs))
         testArgsVerbose.verbose = 2;
 
         const utils: Utils = new Utils(testArgsVerbose);
@@ -200,13 +206,4 @@ describe('Testing Util class', () => {
         expect(spyonError).toHaveBeenCalledTimes(1);
         expect(spyonDebug).toHaveBeenCalledTimes(2);
     });
-
-    // test('basic save Tests', () => {
-    //     const utils: Utils = new Utils(testArgs)
-    //
-    //     expect(utils.savePackageJson()).toBeFalsy();
-    //     expect(utils.backupPackageJson()).toBeFalsy();
-    //     expect(utils.restoreBackup()).toBeFalsy();
-    //     expect(utils.backupExist()).toBeFalsy();
-    // });
 });
