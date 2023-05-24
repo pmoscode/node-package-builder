@@ -37,6 +37,8 @@ tests:
     reports:
       junit:
         - junit.xml
+  except:
+    - schedules
 
 publish_package_gitlab:
   stage: publish
