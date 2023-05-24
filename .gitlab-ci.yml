@@ -15,7 +15,7 @@ stages:
 check version:
   stage: check
   before_script:
-    - apk add jq curl git bash
+    - apk add curl bash gettext
     - npm install -g npm-check-updates@16.10.12
   script:
     - ./pipeline/prepare.sh
