@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 curl -s \
   -X POST \
   --user "$MAILJET_KEY:$MAILJET_SECRET" \
@@ -9,19 +11,19 @@ curl -s \
     "Messages":[
       {
         "From": {
-          "Email": "$MAILJET_FROM_MAIL"
+          "Email": "'$MAILJET_FROM_MAIL'"
         },
         "To": [
           {
-            "Email": "$MAILJET_TO_MAIL"
+            "Email": "'$MAILJET_TO_MAIL'"
           }
         ],
         "TemplateID": 4829964,
         "TemplateLanguage": true,
-        "Subject": "$MAILJET_SUBJECT",
+        "Subject": "'$MAILJET_SUBJECT'",
         "Variables": {
-          "project_name": "$CI_PROJECT_TITLE -- ($CI_PROJECT_NAME)",
-          "project_url": "$CI_PIPELINE_URL"
+          "project_name": "'$CI_PROJECT_TITLE' -- ('$CI_PROJECT_NAME')",
+          "project_url": "'$CI_PIPELINE_URL'"
         }
       }
     ]
