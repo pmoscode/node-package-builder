@@ -1,11 +1,23 @@
 {
-  "entryPoints": ["bin", "lib"],
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "bin/npb.ts",
+    "lib/logger.ts",
+    "lib/parseArgs.ts",
+    "lib/utils.ts",
+    "lib/worker.ts"
+  ],
+  "entryPointStrategy": "expand",
   "out": "public",
   "name": "Node Package Builder",
   "readme": "Readme.md",
   "includeVersion": false,
-  "links": [{
-    "label": "Code Coverage Report",
-    "url": "lcov-report/index.html"
-  }]
+  "navigationLinks": {
+    "Code Coverage Report": "lcov-report/index.html"
+  },
+  "plugin": [
+    "@mxssfd/typedoc-theme"
+  ],
+  "theme": "my-theme",
+  "customCss": "theme/override.css"
 }
