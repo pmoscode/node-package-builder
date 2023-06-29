@@ -1,6 +1,6 @@
 {
   "name": "@pmoscode/node-package-builder",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "A node package helper which assists you in organizing your package.json for multiple environment",
   "bin": {
     "npb": "bin/npb.js"
@@ -46,6 +46,6 @@
     "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "typedoc": "^0.24.8",
-    "typescript": "5.1.3"
+    "typescript": "5.1.6"
   }
 }
