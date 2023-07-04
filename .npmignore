@@ -17,3 +17,4 @@ prepare_npm_publish.sh
 typedoc.json
 jest.config.ts
 coverage/**
+Taskfile.yaml
