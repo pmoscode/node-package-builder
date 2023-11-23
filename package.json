@@ -1,6 +1,6 @@
 {
   "name": "@pmoscode/node-package-builder",
-  "version": "1.1.40",
+  "version": "1.1.41",
   "description": "A node package helper which assists you in organizing your package.json for multiple environment",
   "bin": {
     "npb": "bin/npb.js"
@@ -34,7 +34,7 @@
     "@types/argparse": "^2.0.14",
     "@types/jest": "^29.5.10",
     "@types/lodash.merge": "^4.6.9",
-    "@types/node": "^20.9.4",
+    "@types/node": "^20.9.5",
     "@typescript-eslint/eslint-plugin": "^6.12.0",
     "@typescript-eslint/parser": "^6.12.0",
     "eslint": "^8.54.0",
