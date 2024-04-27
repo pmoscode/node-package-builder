@@ -18,3 +18,4 @@ typedoc.json
 jest.config.ts
 coverage/**
 Taskfile.yaml
+renovate.json
