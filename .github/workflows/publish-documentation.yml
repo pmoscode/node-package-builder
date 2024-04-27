@@ -1,0 +1,49 @@
+on:
+  workflow_run:
+    types:
+      - completed
+    workflows:
+      - Publish to NPM
+  workflow_dispatch:
+    inputs:
+      tag:
+        required: true
+        description: Tag name
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.tag }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: yarn install
+      - run: yarn test
+      - run: node_modules/.bin/typedoc
+      - run: cp -r coverage/lcov-report public
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
