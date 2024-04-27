@@ -6,11 +6,6 @@ on:
       - completed
     workflows:
       - Publish to NPM
-  workflow_dispatch:
-    inputs:
-      tag:
-        required: true
-        description: Tag name
 
 jobs:
   build:
@@ -19,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.inputs.tag }}
+          ref: ${{ github.event.workflow_run.head_branch }}
       - uses: actions/setup-node@v4
         with:
           node-version: 20
