@@ -127,4 +127,4 @@ npb
 ## Code documentation
 
 Here you can find the Code documentation:
-https://pmoscode.gitlab.io/node-package-builder/
+https://pmoscode.github.io/node-package-builder/
