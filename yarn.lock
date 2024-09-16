@@ -773,9 +773,9 @@
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
 "@mxssfd/typedoc-theme@^1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@mxssfd/typedoc-theme/-/typedoc-theme-1.1.6.tgz#d5d3e6290a3b11e9a07aace2ef8656d34696625b"
-  integrity sha512-XJglheU+MVRS3IFFGouBmwpE8R056L5d5EN2ZJkits3l+1x9IlWHxsq+vgzEmv+B2XOthZno/OADiyUpdDjYSA==
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/@mxssfd/typedoc-theme/-/typedoc-theme-1.1.7.tgz#2c7b80b67c57afb4ad5d53aa066b36c1fbef5cee"
+  integrity sha512-dj4p0TjIoudD8j1u+Kf+KzcEc+je3IB/B1oohWcVJmMRfbw5uZYX6qOGHzfUzAPiU1pYe2u5Vo1IPqgLo58taA==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
