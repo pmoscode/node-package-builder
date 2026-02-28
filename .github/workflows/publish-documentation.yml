@@ -6,15 +6,27 @@ on:
       - completed
     workflows:
       - Publish to NPM
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Git Tag to deploy (e.g. v1.2.1)'
+        type: string
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Validate tag exists
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git ls-remote --tags "${{ github.server_url }}/${{ github.repository }}.git" "refs/tags/${{ inputs.tag }}" | grep -q "${{ inputs.tag }}" \
+            || (echo "::error::Tag '${{ inputs.tag }}' does not exist in the repository." && exit 1)
+
       - uses: actions/checkout@v6
         with:
-          ref: ${{ github.event.workflow_run.head_branch }}
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.event.workflow_run.head_branch }}
       - uses: actions/setup-node@v6
         with:
           node-version: 22
