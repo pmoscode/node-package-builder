@@ -2,10 +2,11 @@ jest.mock('fs');
 jest.mock('tslog');
 
 import {Utils} from '../../lib/utils';
+import {ParsedArgs} from '../../lib/parseArgs';
 import fs from 'fs';
 
 describe('Testing Util class', () => {
-    const testArgs = {
+    const testArgs: ParsedArgs = {
         environment: 'test',
         env_dir: 'envs',
         dry_run: false,
@@ -117,7 +118,7 @@ describe('Testing Util class', () => {
         fs.copyFileSync = jest.fn();
 
         utils.backupPackageJson();
-        expect(fs.readFileSync).toHaveBeenCalled();
+        expect(fs.copyFileSync).toHaveBeenCalled();
     });
 
     test('backupPackageJson fail', () => {
@@ -133,7 +134,7 @@ describe('Testing Util class', () => {
         } catch (e) {
         }
 
-        expect(fs.readFileSync).toHaveBeenCalled();
+        expect(fs.copyFileSync).toHaveBeenCalled();
         expect(spyon).toHaveBeenCalled();
     });
 
