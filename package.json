@@ -35,6 +35,8 @@
     "lint": "eslint '**/*.{ts,tsx}' --quiet --fix",
     "test": "jest",
     "prepublishOnly": "yarn build",
+    "docs": "typedoc",
+    "docs:serve": "typedoc && npx -y serve public -l 4000",
     "bump:minor": "yarn version --minor",
     "bump:patch": "yarn version --patch"
   },
@@ -44,12 +46,12 @@
     "tslog": "^4.10.2"
   },
   "devDependencies": {
-    "@mxssfd/typedoc-theme": "^1.1.7",
     "@types/argparse": "^2.0.17",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.3.2",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
+    "@typhonjs-typedoc/typedoc-theme-dmt": "^0.4.0",
     "eslint": "^10.0.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.5",

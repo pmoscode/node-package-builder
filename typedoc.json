@@ -16,8 +16,7 @@
     "Code Coverage Report": "lcov-report/index.html"
   },
   "plugin": [
-    "@mxssfd/typedoc-theme"
+    "@typhonjs-typedoc/typedoc-theme-dmt"
   ],
-  "theme": "my-theme",
-  "customCss": "theme/override.css"
+  "theme": "default-modern"
 }
