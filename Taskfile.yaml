@@ -17,3 +17,9 @@ tasks:
     cmds:
       - yarn bump:patch
       - git push origin $(git describe)
+      -
+  bump-minor:
+    desc: Bump minor version in package.json and create tag for version and push to remote repo
+    cmds:
+      - yarn bump:minor
+      - git push origin $(git describe)
