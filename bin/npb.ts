@@ -4,8 +4,17 @@
  * @packageDocumentation
  */
 import { Worker } from '../lib/worker';
+import { getLogger } from '../lib/logger';
 
+const logger = getLogger('npb');
 
 try {
     new Worker().start();
-} catch (e) {}
+} catch (e) {
+    if (e instanceof Error) {
+        logger.error(e.message);
+    } else {
+        logger.error('An unexpected error occurred', e);
+    }
+    process.exit(1);
+}

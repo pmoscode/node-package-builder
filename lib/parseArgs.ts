@@ -1,5 +1,33 @@
 import { ArgumentParser } from 'argparse';
-import { version } from '../package.json';
+import fs from 'fs';
+import path from 'path';
+
+/**
+ * Reads the version from the nearest package.json at runtime.
+ * This works both in the source tree and after compilation to dist/.
+ */
+function getVersion(): string {
+    try {
+        const pkgPath = path.resolve(__dirname, '..', 'package.json');
+        const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+        return pkg.version ?? 'unknown';
+    } catch {
+        return 'unknown';
+    }
+}
+
+/**
+ * Interface for the parsed CLI arguments.
+ */
+export interface ParsedArgs {
+    environment: string;
+    env_dir: string;
+    dry_run: boolean;
+    backup_name: string;
+    include_environment: boolean;
+    replace: boolean;
+    verbose: number;
+}
 
 /**
  * This class defines all arguments which can be passed to the Node Package Builder.
@@ -64,7 +92,7 @@ export class ParseArgs {
         });
         this.parser.add_argument('--version', {
             action: 'version',
-            version,
+            version: getVersion(),
         });
     }
 
@@ -73,7 +101,7 @@ export class ParseArgs {
      *
      * @returns An object with the parsed parameters
      */
-    public parseArgs(): any {
+    public parseArgs(): ParsedArgs {
         return this.parser.parse_args();
     }
 }

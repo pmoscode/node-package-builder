@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { getLogger } from './logger';
+import { ParsedArgs } from './parseArgs';
 
 /**
  * This is the util class for the worker.
@@ -40,8 +41,12 @@ export class Utils {
      *
      * @param parsedArgs The parsed arguments passed via cli
      */
-    constructor(private parsedArgs: any) {
+    constructor(private parsedArgs: ParsedArgs) {
         const rootFolder = process.cwd();
+
+        this.validatePath(parsedArgs.env_dir, rootFolder, 'env_dir');
+        this.validatePath(parsedArgs.backup_name, rootFolder, 'backup_name');
+
         this.packageJsonPath = path.join(rootFolder, 'package.json');
         this.environmentJsonPath = path.join(
             rootFolder,
@@ -49,6 +54,22 @@ export class Utils {
             `${this.parsedArgs.environment}.json`,
         );
         this.backupJsonPath = path.join(rootFolder, this.parsedArgs.env_dir, this.parsedArgs.backup_name);
+    }
+
+    /**
+     * Validates that a given path segment does not escape the project root directory.
+     *
+     * @param segment The path segment to validate
+     * @param rootFolder The project root folder
+     * @param paramName The parameter name (for error messages)
+     *
+     * @private
+     */
+    private validatePath(segment: string, rootFolder: string, paramName: string) {
+        const resolved = path.resolve(rootFolder, segment);
+        if (!resolved.startsWith(rootFolder + path.sep) && resolved !== rootFolder) {
+            throw new Error(`Invalid ${paramName}: path must not escape the project directory.`);
+        }
     }
 
     /**
@@ -66,7 +87,7 @@ export class Utils {
      * @returns True / False
      */
     public isResetEnvironment(): boolean {
-        return this.parsedArgs.environment.toLowerCase() == '__reset__';
+        return this.parsedArgs.environment.toLowerCase() === '__reset__';
     }
 
     /**
@@ -145,7 +166,7 @@ export class Utils {
             return fs.readFileSync(this.packageJsonPath, 'utf-8');
         } catch (e) {
             this.logError(
-                'Could not load "package.json". Ensure you\'re running this command fron the root of your project.',
+                'Could not load "package.json". Ensure you\'re running this command from the root of your project.',
                 e,
             );
             throw new Error('exit');
@@ -224,8 +245,9 @@ export class Utils {
      * Used for debugging purposes. (Prints the parsed cli parameters to console.)
      */
     public verboseParameters() {
-        for (const key of Object.keys(this.parsedArgs)) {
-            this.logger.info(`Key: ${key} ==> Value: ${this.parsedArgs[key]}`);
+        const args = this.parsedArgs as unknown as Record<string, unknown>;
+        for (const key of Object.keys(args)) {
+            this.logger.info(`Key: ${key} ==> Value: ${args[key]}`);
         }
     }
 }
