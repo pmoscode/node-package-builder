@@ -1,7 +1,7 @@
-import { ParseArgs } from './parseArgs';
+import { ParseArgs, ParsedArgs } from './parseArgs';
 import { getLogger } from './logger';
 
-import merge from 'lodash.merge';
+import merge from 'deepmerge';
 import { Utils } from './utils';
 
 /**
@@ -26,10 +26,11 @@ export class Worker {
      * The constructor parses the cli arguments and instantiate the Util class.
      */
     constructor() {
-        const parsedArgs: ParseArgs = new ParseArgs();
-        parsedArgs.build();
+        const parser = new ParseArgs();
+        parser.build();
+        const parsedArgs: ParsedArgs = parser.parseArgs();
 
-        this.utils = new Utils(parsedArgs.parseArgs());
+        this.utils = new Utils(parsedArgs);
     }
 
     /**
@@ -98,7 +99,7 @@ export class Worker {
         if (this.utils.isReplace()) {
             merged = environmentJson;
         } else {
-            merged = merge({}, packageJson, environmentJson);
+            merged = merge(packageJson, environmentJson);
         }
 
         if (this.utils.isIncludeEnvironment()) {

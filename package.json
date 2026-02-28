@@ -17,27 +17,36 @@
   ],
   "main": "bin/npb.js",
   "types": "bin/npb.d.ts",
-  "repository": "https://gitlab.com/pmoscode/node-package-builder.git",
+  "repository": "https://github.com/pmoscode/node-package-builder.git",
   "author": "Peter Motzko <info@pmoscode.de>",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "bin/",
+    "lib/",
+    "LICENSE",
+    "Readme.md"
+  ],
   "scripts": {
     "build": "yarn tsc && ./prepare_npm_publish.sh",
     "watch": "yarn tsc --watch",
     "lint": "eslint '**/*.{ts,tsx}' --quiet --fix",
     "test": "jest",
+    "prepublishOnly": "yarn build",
     "bump:minor": "yarn version --minor",
     "bump:patch": "yarn version --patch"
   },
   "dependencies": {
     "argparse": "^2.0.1",
-    "lodash.merge": "^4.6.2",
+    "deepmerge": "^4.3.1",
     "tslog": "^4.10.2"
   },
   "devDependencies": {
     "@mxssfd/typedoc-theme": "^1.1.7",
     "@types/argparse": "^2.0.17",
     "@types/jest": "^30.0.0",
-    "@types/lodash.merge": "^4.6.9",
     "@types/node": "^25.3.2",
     "@typescript-eslint/eslint-plugin": "^8.56.1",
     "@typescript-eslint/parser": "^8.56.1",
