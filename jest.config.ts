@@ -9,7 +9,7 @@ const config: Config.InitialOptions = {
     testPathIgnorePatterns: ['<rootDir>/dist'],
     testMatch: ['**/test/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[tj]s?(x)'],
     transform: {
-        '^.+\\.(ts|tsx)$': 'ts-jest',
+        '^.+\\.(ts|tsx)$': ['ts-jest', { tsconfig: 'tsconfig.test.json' }],
     },
 };
 export default config;
