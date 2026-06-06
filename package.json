@@ -48,7 +48,7 @@
   "devDependencies": {
     "@types/argparse": "^2.0.17",
     "@types/jest": "^30.0.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.2",
     "@typescript-eslint/eslint-plugin": "^8.60.1",
     "@typescript-eslint/parser": "^8.60.1",
     "@typhonjs-typedoc/typedoc-theme-dmt": "^0.4.0",
