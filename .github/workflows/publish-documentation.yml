@@ -53,7 +53,7 @@ jobs:
             echo "ref=${{ github.ref }}" >> "$GITHUB_OUTPUT"
           fi
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           ref: ${{ steps.determine-ref.outputs.ref }}
       - uses: actions/setup-node@v6
