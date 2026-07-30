@@ -218,7 +218,7 @@ export class Utils {
      *
      * @param mergedPackage The content for the new package.json
      */
-    public savePackageJson(mergedPackage: any) {
+    public savePackageJson(mergedPackage: Record<string, unknown>) {
         try {
             fs.writeFileSync(this.packageJsonPath, JSON.stringify(mergedPackage, null, 2), 'utf-8');
         } catch (e) {
@@ -235,9 +235,10 @@ export class Utils {
      *
      * @private
      */
-    private logError(msg: string, e: any) {
+    private logError(msg: string, e: unknown) {
         this.logger.error(msg);
-        if (this.isVerboseL1()) this.logger.debug('Source error message:', e.message);
+        const message = e instanceof Error ? e.message : String(e);
+        if (this.isVerboseL1()) this.logger.debug('Source error message:', message);
         if (this.isVerboseL2()) this.logger.debug('Source error:', e);
     }
 

@@ -72,8 +72,7 @@ export class ParseArgs {
             action: 'store_true',
         });
         this.parser.add_argument('-b', '--backup-name', {
-            help:
-                'Name of the package.json backup file. Restored when calling without any environment. (default == .package.json)',
+            help: 'Name of the package.json backup file. Restored when calling without any environment. (default == .package.json)',
             default: '.package.json',
         });
         this.parser.add_argument('-i', '--include-environment', {
@@ -81,8 +80,7 @@ export class ParseArgs {
             action: 'store_true',
         });
         this.parser.add_argument('-r', '--replace', {
-            help:
-                'Replaces the package.json instead of a merge. For this, the environment package.json has to be complete.',
+            help: 'Replaces the package.json instead of a merge. For this, the environment package.json has to be complete.',
             action: 'store_true',
         });
         this.parser.add_argument('-v', '--verbose', {

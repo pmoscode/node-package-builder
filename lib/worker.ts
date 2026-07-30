@@ -58,7 +58,7 @@ export class Worker {
      *
      * @private
      */
-    private getPackageJson(): any {
+    private getPackageJson(): Record<string, unknown> {
         let packageString;
         if (this.utils.isBackupExisting()) {
             packageString = this.utils.loadBackupJson();
@@ -79,7 +79,7 @@ export class Worker {
      *
      * @private
      */
-    private getEnvironmentJson(): any {
+    private getEnvironmentJson(): Record<string, unknown> {
         return JSON.parse(this.utils.loadEnvironmentJson());
     }
 
@@ -93,7 +93,10 @@ export class Worker {
      *
      * @private
      */
-    private mergeJson(packageJson: any, environmentJson: any): any {
+    private mergeJson(
+        packageJson: Record<string, unknown>,
+        environmentJson: Record<string, unknown>,
+    ): Record<string, unknown> {
         let merged;
 
         if (this.utils.isReplace()) {
@@ -116,7 +119,7 @@ export class Worker {
      *
      * @private
      */
-    private writeNewPackage(mergedPackage: any) {
+    private writeNewPackage(mergedPackage: Record<string, unknown>) {
         if (this.utils.isDryRun()) {
             this.logger.info('##################################');
             this.logger.info('######### DRY-RUN output #########');

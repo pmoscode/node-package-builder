@@ -1,8 +1,8 @@
 jest.mock('fs');
 jest.mock('tslog');
 
-import {Utils} from '../../lib/utils';
-import {ParsedArgs} from '../../lib/parseArgs';
+import { Utils } from '../../lib/utils';
+import { ParsedArgs } from '../../lib/parseArgs';
 import fs from 'fs';
 
 describe('Testing Util class', () => {
@@ -49,7 +49,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadEnvironmentJson();
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.readFileSync).toHaveBeenCalled();
@@ -77,7 +78,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadBackupJson();
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.readFileSync).toHaveBeenCalled();
@@ -105,7 +107,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.loadPackageJson();
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.readFileSync).toHaveBeenCalled();
@@ -131,7 +134,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.backupPackageJson();
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.copyFileSync).toHaveBeenCalled();
@@ -160,7 +164,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.restoreBackup();
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.copyFileSync).toHaveBeenCalled();
@@ -178,7 +183,8 @@ describe('Testing Util class', () => {
 
         try {
             utils.savePackageJson({});
-        } catch (e) {
+        } catch {
+            // ignored: this test only asserts that the error path was triggered
         }
 
         expect(fs.writeFileSync).toHaveBeenCalled();
@@ -195,7 +201,7 @@ describe('Testing Util class', () => {
     });
 
     test('log error with -vv', () => {
-        const testArgsVerbose = {...testArgs}; // JSON.parse(JSON.stringify(testArgs))
+        const testArgsVerbose = { ...testArgs }; // JSON.parse(JSON.stringify(testArgs))
         testArgsVerbose.verbose = 2;
 
         const utils: Utils = new Utils(testArgsVerbose);
