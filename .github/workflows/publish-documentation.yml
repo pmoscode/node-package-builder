@@ -58,7 +58,7 @@ jobs:
           ref: ${{ steps.determine-ref.outputs.ref }}
       - uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 24
       - run: yarn install
       - run: yarn test
       - run: node_modules/.bin/typedoc
